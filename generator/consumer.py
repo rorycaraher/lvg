@@ -3,7 +3,7 @@ from google.cloud import pubsub_v1
 import json
 import os
 from select_random_wavs import select_random_wavs, combine_wavs
-import sqlite3
+import psycopg2
 from google.cloud import storage
 import subprocess
 from datetime import datetime
@@ -20,14 +20,20 @@ def callback(message):
     if 'numbers' in data:
         numbers = data['numbers']
         # Store the values and timestamp in the database
-        conn = sqlite3.connect('generator/data.db')
+        conn = psycopg2.connect(
+            dbname="level_values_db",
+            user="db_user",
+            password="your-password",  # Replace with the actual password
+            host="/cloudsql/live-version-generator:europe-west1:live-version-generator-db-instance"
+        )
         cursor = conn.cursor()
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         cursor.execute('''
             INSERT INTO level_values (value1, value2, value3, value4, timestamp)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s)
         ''', (numbers[0], numbers[1], numbers[2], numbers[3], timestamp))
         conn.commit()
+        cursor.close()
         conn.close()
 
         directory = "./generator/seeds/amy-01"
