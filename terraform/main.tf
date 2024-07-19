@@ -3,13 +3,15 @@ provider "google" {
   region  = var.region
 }
 
-variable "project" {
-  description = "The GCP project to use"
-  type        = string
+provider "google" {
+  project = var.project
+  region  = var.region
 }
 
-variable "region" {
-  description = "The GCP region to use"
-  type        = string
-  default     = "us-central1"
+output "debug_project" {
+  value = var.project
+}
+
+output "debug_region" {
+  value = var.region
 }
