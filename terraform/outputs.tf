@@ -1,4 +1,4 @@
 output "pubsub_topic_name" {
   description = "The name of the Pub/Sub topic"
-  value       = google_pubsub_topic.my_topic.name
+  value       = google_pubsub_topic.values.name
 }
