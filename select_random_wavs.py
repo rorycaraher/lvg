@@ -1,6 +1,7 @@
 import os
 import random
 import subprocess
+from datetime import datetime
 
 def select_random_wavs(directory, num_files=4):
     # List all WAV files in the directory
@@ -35,10 +36,13 @@ def combine_wavs(input_files, output_file):
         os.remove(file)
 def main():
     directory = "./seeds/amy-01"
+    output_dir = "./output"
+    os.makedirs(output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     selected_files = select_random_wavs(directory)
 
     selected_file_paths = [os.path.join(directory, file) for file in selected_files]
-    output_file = os.path.join(directory, "combined_hot.wav")
+    output_file = os.path.join(output_dir, f"combined_hot_{timestamp}.wav")
     combine_wavs(selected_file_paths, output_file)
     print(f"Combined file saved as {output_file}")
 
