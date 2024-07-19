@@ -3,6 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-resource "google_pubsub_topic" "values" {
+resource "google_pubsub_topic" "level_values" {
   name = var.pubsub_topic_name
 }

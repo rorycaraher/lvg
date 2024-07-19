@@ -17,7 +17,7 @@ def script():
 
 # Initialize Pub/Sub client
 publisher = pubsub_v1.PublisherClient()
-topic_path = publisher.topic_path('your-project-id', 'values')
+topic_path = publisher.topic_path('your-project-id', 'level_values')
 
 @app.route('/save_numbers', methods=['POST'])
 def save_numbers():
