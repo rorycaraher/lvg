@@ -23,6 +23,13 @@ provider "google" {
   region  = var.region
 }
 
+terraform {
+  backend "gcs" {
+    bucket = "lvg-tfstate-bucket"
+    prefix = "terraform/state"
+  }
+}
+
 resource "google_pubsub_topic" "level_values" {
   name = var.pubsub_topic_name
 }
