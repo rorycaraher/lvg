@@ -39,7 +39,7 @@ def list_files(directory):
         print(file)
 
 def main():
-    directory = "./seeds/amy-01"
+    directory = "./generator/seeds/amy-01"
     print("Listing files in directory:")
     list_files(directory)
     output_dir = "./output"
