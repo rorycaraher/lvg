@@ -3,6 +3,11 @@ variable "project" {
   type        = string
 }
 
+variable "db_password" {
+  description = "The password for the database user"
+  type        = string
+}
+
 variable "pubsub_topic_name" {
   description = "The name of the Pub/Sub topic"
   type        = string
