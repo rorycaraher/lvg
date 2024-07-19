@@ -32,8 +32,13 @@ def combine_wavs(input_files, output_file):
     subprocess.run(ffmpeg_command)
     for file in temp_files:
         os.remove(file)
-def main():
+def list_files(directory):
+    files = os.listdir(directory)
+    for file in files:
+        print(file)
     directory = "./seeds/amy-01"
+    print("Listing files in directory:")
+    list_files(directory)
     output_dir = "./output"
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
