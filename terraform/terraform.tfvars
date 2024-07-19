@@ -1,1 +1,1 @@
-project = "your-gcp-project-id"
+project = "live-version-generator"
