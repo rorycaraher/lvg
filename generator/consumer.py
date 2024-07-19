@@ -3,6 +3,7 @@ from google.cloud import pubsub_v1
 import json
 import os
 from select_random_wavs import select_random_wavs, combine_wavs
+import sqlite3
 from google.cloud import storage
 import subprocess
 from datetime import datetime
@@ -18,6 +19,17 @@ def callback(message):
     data = json.loads(message.data)
     if 'numbers' in data:
         numbers = data['numbers']
+        # Store the values and timestamp in the database
+        conn = sqlite3.connect('generator/data.db')
+        cursor = conn.cursor()
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cursor.execute('''
+            INSERT INTO level_values (value1, value2, value3, value4, timestamp)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (numbers[0], numbers[1], numbers[2], numbers[3], timestamp))
+        conn.commit()
+        conn.close()
+
         directory = "./generator/seeds/amy-01"
         selected_files = select_random_wavs(directory)
         selected_file_paths = [os.path.join(directory, file) for file in selected_files]
