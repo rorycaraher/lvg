@@ -16,6 +16,10 @@ def index():
 def script():
     return send_from_directory('.', 'script.js')
 
+@app.route('/style.css')
+def style():
+    return send_from_directory('.', 'style.css')
+
 # Initialize Pub/Sub client
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path('live-version-generator', 'level_values')
