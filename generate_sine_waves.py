@@ -37,7 +37,10 @@ def save_wave(filename, wave_data, sample_rate):
         for sample in wave_data:
             wf.writeframes(struct.pack('h', int(sample)))
 
-def main():
+def list_current_directory():
+    files = os.listdir(".")
+    for file in files:
+        print(file)
     output_dir = "./seeds/amy-01"
     os.makedirs(output_dir, exist_ok=True)
     
