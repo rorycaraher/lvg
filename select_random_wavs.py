@@ -23,9 +23,10 @@ def combine_wavs(input_files, output_file):
         "-filter_complex", "aecho=0.8:0.9:1000:0.3", output_file
     ])
     os.remove("input_files.txt")
+def main():
     directory = "./seeds/amy-01"
     selected_files = select_random_wavs(directory)
-    
+
     selected_file_paths = [os.path.join(directory, file) for file in selected_files]
     output_file = os.path.join(directory, "combined_hot.wav")
     combine_wavs(selected_file_paths, output_file)
