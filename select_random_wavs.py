@@ -12,17 +12,27 @@ def select_random_wavs(directory, num_files=4):
     return selected_files
 
 def combine_wavs(input_files, output_file):
-    # Create a temporary text file with the list of input files
+    temp_files = []
+    for file in input_files:
+        volume = random.uniform(0.5, 1.5)  # Random volume between 0.5 and 1.5
+        temp_file = f"temp_{os.path.basename(file)}"
+        temp_files.append(temp_file)
+        subprocess.run([
+            "ffmpeg", "-i", file, "-filter:a", f"volume={volume}", temp_file
+        ])
+    
     with open("input_files.txt", "w") as f:
-        for file in input_files:
+        for file in temp_files:
             f.write(f"file '{file}'\n")
     
-    # Use ffmpeg to concatenate the files and add a reverb effect
     subprocess.run([
         "ffmpeg", "-f", "concat", "-safe", "0", "-i", "input_files.txt",
         "-filter_complex", "aecho=0.8:0.9:1000:0.3", output_file
     ])
+    
     os.remove("input_files.txt")
+    for file in temp_files:
+        os.remove(file)
 def main():
     directory = "./seeds/amy-01"
     selected_files = select_random_wavs(directory)
