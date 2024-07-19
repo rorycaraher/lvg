@@ -55,4 +55,4 @@ def init_db_connection():
     return pool
 
 db = init_db_connection()
-    app.run(debug=True)
+app.run(debug=True)
