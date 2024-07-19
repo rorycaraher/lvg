@@ -10,3 +10,9 @@ provider "google" {
 resource "google_pubsub_topic" "level_values" {
   name = var.pubsub_topic_name
 }
+
+resource "google_storage_bucket" "audio_bucket" {
+  name     = "${var.project}-audio-bucket"
+  location = var.region
+  force_destroy = true
+}

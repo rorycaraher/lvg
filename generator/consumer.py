@@ -3,6 +3,7 @@ from google.cloud import pubsub_v1
 import json
 import os
 from select_random_wavs import select_random_wavs, combine_wavs
+from google.cloud import storage
 import subprocess
 from datetime import datetime
 
@@ -45,7 +46,14 @@ def callback(message):
         for file in temp_files:
             os.remove(file)
         
-        print(f"Combined file saved as {output_file}")
+        # Upload the file to the storage bucket
+        storage_client = storage.Client()
+        bucket_name = "live-version-generator-audio-bucket"
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(f"audio/{os.path.basename(output_file)}")
+        blob.upload_from_filename(output_file)
+        
+        print(f"Combined file saved as {output_file} and uploaded to {bucket_name}")
     message.ack()
 
 # Listen for messages on the subscription
