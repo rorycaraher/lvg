@@ -22,16 +22,12 @@ def combine_wavs(input_files, output_file):
             "ffmpeg", "-i", file, "-filter:a", f"volume={volume}", temp_file
         ])
     
-    with open("input_files.txt", "w") as f:
-        for file in temp_files:
-            f.write(f"file '{file}'\n")
-    
+    input_files_str = '|'.join(temp_files)
     subprocess.run([
-        "ffmpeg", "-f", "concat", "-safe", "0", "-i", "input_files.txt",
-        "-filter_complex", "aecho=0.8:0.9:1000:0.3", output_file
+        "ffmpeg", "-i", f"concat:{input_files_str}",
+        "-filter_complex", f"amix=inputs={len(temp_files)}:duration=longest, aecho=0.8:0.9:1000:0.3",
+        output_file
     ])
-    
-    os.remove("input_files.txt")
     for file in temp_files:
         os.remove(file)
 def main():
