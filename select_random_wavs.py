@@ -14,7 +14,7 @@ def select_random_wavs(directory, num_files=4):
 def combine_wavs(input_files, output_file):
     temp_files = []
     for file in input_files:
-        volume = random.uniform(0.5, 1.5)  # Random volume between 0.5 and 1.5
+        volume = random.uniform(0.5, 1.0)  # Random volume between 0.5 and 1.0
         temp_file = f"temp_{os.path.basename(file)}"
         temp_files.append(temp_file)
         subprocess.run([
