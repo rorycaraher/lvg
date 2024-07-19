@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
 from flask_cors import CORS
+from google.cloud import pubsub_v1
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -13,14 +15,23 @@ def index():
 def script():
     return send_from_directory('.', 'script.js')
 
+# Initialize Pub/Sub client
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path('your-project-id', 'your-topic-name')
+
 @app.route('/save_numbers', methods=['POST'])
 def save_numbers():
     data = request.get_json()
     if 'numbers' in data:
-        numbers = ", ".join(data['numbers'])
-        with open('queue.txt', 'a') as f:
-            f.write(numbers + "\n")
-        return jsonify({"message": "Numbers saved successfully"}), 200
+        numbers = data['numbers']
+        message_json = json.dumps({'numbers': numbers})
+        message_bytes = message_json.encode('utf-8')
+        
+        # Publish message to Pub/Sub
+        future = publisher.publish(topic_path, data=message_bytes)
+        future.result()  # Ensure the message is published
+        
+        return jsonify({"message": "Numbers pushed to Pub/Sub successfully"}), 200
     else:
         return jsonify({"error": "Invalid data"}), 400
 

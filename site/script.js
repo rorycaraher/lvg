@@ -6,9 +6,9 @@ function generateRandomNumbers() {
     xhr.send(JSON.stringify({ numbers: numbers }));
     xhr.onload = function() {
         if (xhr.status === 200) {
-            alert("Generated numbers: " + numbers.join(", "));
+            alert("Generated numbers: " + numbers.join(", ") + " and pushed to Pub/Sub.");
         } else {
-            alert("Failed to save numbers.");
+            alert("Failed to push numbers to Pub/Sub.");
         }
     };
 }
