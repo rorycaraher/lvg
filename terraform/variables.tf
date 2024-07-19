@@ -3,6 +3,12 @@ variable "project" {
   type        = string
 }
 
+variable "static_site_bucket_name" {
+  description = "The name of the static site bucket"
+  type        = string
+  default     = "static-site"
+}
+
 variable "db_password" {
   description = "The password for the database user"
   type        = string

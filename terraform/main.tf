@@ -33,3 +33,35 @@ resource "google_storage_bucket" "audio_bucket" {
   location = var.region
   force_destroy = true
 }
+
+resource "google_storage_bucket" "static_site_bucket" {
+  name          = "${var.project}-static-site"
+  location      = var.region
+  force_destroy = true
+
+  website {
+    main_page_suffix = "index.html"
+    not_found_page   = "404.html"
+  }
+}
+
+resource "google_storage_bucket_object" "index" {
+  name   = "index.html"
+  bucket = google_storage_bucket.static_site_bucket.name
+  source = "site/index.html"
+  content_type = "text/html"
+}
+
+resource "google_storage_bucket_object" "script" {
+  name   = "script.js"
+  bucket = google_storage_bucket.static_site_bucket.name
+  source = "site/script.js"
+  content_type = "application/javascript"
+}
+
+resource "google_storage_bucket_object" "404" {
+  name   = "404.html"
+  bucket = google_storage_bucket.static_site_bucket.name
+  source = "site/404.html"
+  content_type = "text/html"
+}
