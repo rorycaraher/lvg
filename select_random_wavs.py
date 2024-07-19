@@ -32,7 +32,7 @@ def combine_wavs(input_files, output_file):
     subprocess.run(ffmpeg_command)
     for file in temp_files:
         os.remove(file)
-def list_files(directory):
+def main():
     files = os.listdir(directory)
     for file in files:
         print(file)
@@ -49,6 +49,7 @@ def list_files(directory):
     combine_wavs(selected_file_paths, output_file)
     print(f"Combined file saved as {output_file}")
 
+if __name__ == "__main__":
 if __name__ == "__main__":
     print("Listing files in the current directory:")
     list_current_directory()
