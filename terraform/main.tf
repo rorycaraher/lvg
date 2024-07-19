@@ -16,7 +16,6 @@ resource "google_sql_database" "db" {
 resource "google_sql_user" "db_user" {
   name     = "db_user"
   instance = google_sql_database_instance.db_instance.name
-  password = "your-password"  # Replace with a secure password
 }
 
 provider "google" {
