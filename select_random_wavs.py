@@ -47,6 +47,9 @@ def main():
 
     selected_file_paths = [os.path.join(directory, file) for file in selected_files]
     output_file = os.path.join(output_dir, f"combined_hot_{timestamp}.wav")
+    with open("queue-example.txt", "a") as f:
+        f.write(", ".join(selected_files) + "\n")
+        
     combine_wavs(selected_file_paths, output_file)
     print(f"Combined file saved as {output_file}")
 
