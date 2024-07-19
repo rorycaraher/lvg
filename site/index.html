@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <script>
+        function generateRandomNumbers() {
+            const numbers = Array.from({ length: 4 }, () => Math.random().toFixed(2));
+            alert("Generated numbers: " + numbers.join(", "));
+        }
+    </script>
+</head>
+<body>
+    <h1>Random Number Generator</h1>
+    <button onclick="generateRandomNumbers()">Download</button>
+</body>
+</html>
