@@ -3,6 +3,7 @@ from google.cloud import pubsub_v1
 import json
 import os
 from select_random_wavs import select_random_wavs, combine_wavs
+import subprocess
 from datetime import datetime
 
 # Set up the subscriber
