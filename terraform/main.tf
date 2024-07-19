@@ -1,7 +1,3 @@
-data "google_project" "project" {
-  project_id = var.project
-}
-
 resource "google_sql_database_instance" "db_instance" {
   name             = "${var.project}-db-instance"
   database_version = "POSTGRES_13"
@@ -24,7 +20,7 @@ resource "google_sql_user" "db_user" {
 }
 
 provider "google" {
-  project = data.google_project.project.project_id
+  project = var.project
   region  = var.region
 }
 
