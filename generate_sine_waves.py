@@ -50,5 +50,8 @@ def list_current_directory():
         save_wave(filename, wave_data, SAMPLE_RATE)
         print(f"Generated {filename}")
 
+def main():
+    list_current_directory()
+
 if __name__ == "__main__":
     main()

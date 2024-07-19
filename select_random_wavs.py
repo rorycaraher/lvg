@@ -2,6 +2,7 @@ import os
 import random
 import subprocess
 from datetime import datetime
+from generate_sine_waves import list_current_directory
 
 def select_random_wavs(directory, num_files=4):
     # List all WAV files in the directory
