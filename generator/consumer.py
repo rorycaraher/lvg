@@ -38,7 +38,7 @@ def callback(message):
         for temp_file in temp_files:
             ffmpeg_command.extend(["-i", temp_file])
         
-        filter_complex = f"amix=inputs={len(temp_files)}:duration=longest, aecho=0.8:0.9:1000:0.3"
+        filter_complex = f"amerge=inputs={len(temp_files)}, aecho=0.8:0.9:1000:0.3"
         ffmpeg_command.extend(["-filter_complex", filter_complex, output_file])
         
         subprocess.run(ffmpeg_command)
