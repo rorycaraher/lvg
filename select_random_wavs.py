@@ -50,7 +50,6 @@ def main():
     print(f"Combined file saved as {output_file}")
 
 if __name__ == "__main__":
-if __name__ == "__main__":
     print("Listing files in the current directory:")
     list_current_directory()
     main()
