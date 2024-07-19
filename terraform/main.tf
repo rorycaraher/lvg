@@ -1,5 +1,9 @@
+data "google_project" "project" {
+  project_id = var.project
+}
+
 provider "google" {
-  project = var.project
+  project = data.google_project.project.project_id
   region  = var.region
 }
 
