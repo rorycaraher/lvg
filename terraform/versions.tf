@@ -7,3 +7,8 @@ terraform {
     }
   }
 }
+
+backend "gcs" {
+  bucket = "lvg-tfstate-bucket"
+  prefix = "terraform/state"
+}
