@@ -58,7 +58,7 @@ resource "google_storage_bucket_object" "script" {
   content_type = "application/javascript"
 }
 
-resource "google_storage_bucket_object" "404" {
+resource "google_storage_bucket_object" "not_found_page" {
   name   = "404.html"
   bucket = google_storage_bucket.static_site_bucket.name
   source = "site/404.html"
