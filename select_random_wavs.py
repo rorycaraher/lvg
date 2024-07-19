@@ -33,6 +33,10 @@ def combine_wavs(input_files, output_file):
     for file in temp_files:
         os.remove(file)
 def list_files(directory):
+    files = os.listdir(directory)
+    for file in files:
+        print(file)
+
 def main():
     directory = "./seeds/amy-01"
     print("Listing files in directory:")
