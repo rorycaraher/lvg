@@ -3,6 +3,12 @@ variable "project" {
   type        = string
 }
 
+variable "pubsub_topic_name" {
+  description = "The name of the Pub/Sub topic"
+  type        = string
+  default     = "my-topic"
+}
+
 variable "region" {
   description = "The GCP region to use"
   type        = string
