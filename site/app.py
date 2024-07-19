@@ -50,7 +50,9 @@ def init_db_connection():
             username=db_user,
             password=db_pass,
             database=db_name,
-            host=db_host
+            host=db_host,
+            port=5432,  # Default port for PostgreSQL
+            query={}
         )
     )
     return pool
