@@ -37,19 +37,19 @@ resource "google_pubsub_topic" "level_values" {
 resource "google_storage_bucket" "tfstate_bucket" {
   name     = "lvg-tfstate-bucket"
   location = var.region
-  force_destroy = true
+  force_destroy = false
 }
 
 resource "google_storage_bucket" "audio_bucket" {
   name     = "${var.project}-audio-bucket"
   location = var.region
-  force_destroy = true
+  force_destroy = false
 }
 
 resource "google_storage_bucket" "static_site_bucket" {
   name          = "${var.project}-static-site"
   location      = var.region
-  force_destroy = true
+  force_destroy = false
 
   website {
     main_page_suffix = "index.html"

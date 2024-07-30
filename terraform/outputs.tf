@@ -3,6 +3,11 @@ output "pubsub_topic_name" {
   value       = google_pubsub_topic.level_values.name
 }
 
+output "static_site_url" {
+  description = "The URL of the static site"
+  value       = "http://${google_storage_bucket.static_site_bucket.name}.storage.googleapis.com"
+}
+
 output "db_instance_connection_name" {
   description = "The connection name of the Cloud SQL instance"
   value       = google_sql_database_instance.db_instance.connection_name

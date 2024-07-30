@@ -1,0 +1,22 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: purple;
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
+button {
+    background-color: white;
+    color: purple;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: lightgray;
+}

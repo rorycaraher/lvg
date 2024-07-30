@@ -1,4 +1,5 @@
 import os
+import sqlalchemy
 from google.cloud import pubsub_v1
 import json
 import os
@@ -8,7 +9,25 @@ from google.cloud import storage
 import subprocess
 from datetime import datetime
 
-# Set up the subscriber
+# Database connection setup
+def init_db_connection():
+    db_user = "db_user"
+    db_name = "level_values_db"
+    db_connection_name = os.getenv("DB_CONNECTION_NAME")
+
+    pool = sqlalchemy.create_engine(
+        sqlalchemy.engine.url.URL(
+            drivername="postgresql+pg8000",
+            username=db_user,
+            database=db_name,
+            query={
+                "unix_sock": f"/cloudsql/{db_connection_name}/.s.PGSQL.5432"
+            }
+        )
+    )
+    return pool
+
+db = init_db_connection()
 project_id = "live-version-generator"
 subscription_id = "level_values-sub"
 subscriber = pubsub_v1.SubscriberClient()

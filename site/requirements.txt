@@ -1,0 +1,4 @@
+Flask
+google
+google-cloud-pubsub
+pg8000
