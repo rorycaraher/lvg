@@ -1,4 +1,5 @@
 Flask
 google
 google-cloud-pubsub
+google-cloud-storage
 pg8000

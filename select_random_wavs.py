@@ -33,6 +33,7 @@ def combine_wavs(input_files, output_file):
     subprocess.run(ffmpeg_command)
     for file in temp_files:
         os.remove(file)
+
 def list_files(directory):
     files = os.listdir(directory)
     for file in files:

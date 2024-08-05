@@ -2,23 +2,11 @@ from flask import Flask, request, jsonify, send_from_directory
 import os
 import sqlalchemy
 from flask_cors import CORS
-from google.cloud import pubsub_v1
+from google.cloud import pubsub_v1, storage
 import json
 
 app = Flask(__name__)
 CORS(app)
-
-@app.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
-
-@app.route('/script.js')
-def script():
-    return send_from_directory('.', 'script.js')
-
-@app.route('/static/style.css')
-def style():
-    return send_from_directory('static', 'style.css')
 
 # Initialize Pub/Sub client
 publisher = pubsub_v1.PublisherClient()
@@ -27,14 +15,14 @@ topic_path = publisher.topic_path('live-version-generator', 'level_values')
 @app.route('/save_numbers', methods=['POST'])
 def save_numbers():
     data = request.get_json()
-    if 'numbers' in data:
-        numbers = data['numbers']
-        message_json = json.dumps({'numbers': numbers})
-        message_bytes = message_json.encode('utf-8')
+    if 'lvg_values' in data:
+    #     numbers = data['numbers']
+    #     message_json = json.dumps({'numbers': numbers})
+    #     message_bytes = message_json.encode('utf-8')
         
-        # Publish message to Pub/Sub
-        future = publisher.publish(topic_path, data=message_bytes)
-        future.result()  # Ensure the message is published
+    #     # Publish message to Pub/Sub
+    #     future = publisher.publish(topic_path, data=message_bytes)
+    #     future.result()  # Ensure the message is published
         
         return jsonify({"message": "Numbers pushed to Pub/Sub successfully"}), 200
     else:
