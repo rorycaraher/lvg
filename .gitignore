@@ -1,6 +1,10 @@
 .DS_Store
 .aider*
 
+# custom ignores
+output/
+.output/
+
 # Terraform files
 *.tfstate
 *.tfstate.*

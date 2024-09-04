@@ -4,6 +4,10 @@ import sqlalchemy
 from flask_cors import CORS
 from google.cloud import pubsub_v1, storage
 import json
+# mixdown stuff
+import subprocess
+from datetime import datetime
+import ffmpeg
 
 app = Flask(__name__)
 CORS(app)
@@ -23,8 +27,24 @@ def save_numbers():
     #     # Publish message to Pub/Sub
     #     future = publisher.publish(topic_path, data=message_bytes)
     #     future.result()  # Ensure the message is published
-        
+        print(data)
         return jsonify({"message": "Numbers pushed to Pub/Sub successfully"}), 200
+    else:
+        return jsonify({"error": "Invalid data"}), 400
+        
+@app.route('/test_mixdown', methods=['POST'])
+def test_mixdown():
+    data = request.get_json()
+    if 'lvg_values' in data:   
+        stem_numbers = []
+        volumes = []
+        # print(data)
+        for item in data["lvg_values"]:
+            stem_numbers.append(item['number'])
+            volumes.append(item['value'])
+        print(stem_numbers)
+        print(volumes)
+        return jsonify({"message": f"Success! {stem_numbers}"}), 200
     else:
         return jsonify({"error": "Invalid data"}), 400
 

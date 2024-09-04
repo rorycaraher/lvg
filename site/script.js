@@ -18,7 +18,7 @@ function generateRandomNumbers() {
     }));
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://127.0.0.1:5000/save_numbers", true);
+    xhr.open("POST", "http://127.0.0.1:5000/test_mixdown", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({ lvg_values: lvg_values }));
     xhr.onload = function() {
