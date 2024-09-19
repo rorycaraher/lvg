@@ -19,26 +19,26 @@ def choose_stems(directory, num_files=3):
     
     return selected_file_paths
 
-random_volumes = [round(random.uniform(0.5, 1), 1) for _ in range(3)]
+def create_mixdown(input_files):
+    random_volumes = [round(random.uniform(0.5, 1), 1) for _ in range(3)]
+    # Apply volume filters to each input file
+    streams = []
+    for i, input_file in enumerate(input_files):
+        stream = (
+            ffmpeg.input(input_file)
+            .filter('volume', random_volumes[i])
+        )
+        streams.append(stream)
+
+    # Combine the inputs using amix
+    combined = (
+        ffmpeg.filter(streams, 'amix', inputs=len(streams), duration='longest')
+        .output(f'output/output-from-lib-{timestamp}.mp3', acodec='libmp3lame', audio_bitrate='192k')
+    )
+    # Run the ffmpeg command
+    ffmpeg.run(combined)
+
 
 # Define input MP3 files
 input_files = choose_stems(stems_dir)
-
-
-# Apply volume filters to each input file
-streams = []
-for i, input_file in enumerate(input_files):
-    stream = (
-        ffmpeg.input(input_file)
-        .filter('volume', random_volumes[i])
-    )
-    streams.append(stream)
-
-# Combine the inputs using amix
-combined = (
-    ffmpeg.filter(streams, 'amix', inputs=len(streams), duration='longest')
-    .output(f'output/output-from-lib-{timestamp}.mp3', acodec='libmp3lame', audio_bitrate='192k')
-)
-
-# Run the ffmpeg command
-ffmpeg.run(combined)
+create_mixdown(input_files)
