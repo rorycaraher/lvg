@@ -4,50 +4,45 @@ import sqlalchemy
 from flask_cors import CORS
 from google.cloud import pubsub_v1, storage
 import json
-# mixdown stuff
-import subprocess
 from datetime import datetime
-import ffmpeg
+# mixdown stuff
+from mixer import mixer
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='site'
+            )
 CORS(app)
 
-# Initialize Pub/Sub client
-publisher = pubsub_v1.PublisherClient()
-topic_path = publisher.topic_path('live-version-generator', 'level_values')
+mixer = mixer.Mixer()
+stems_dir = "/Users/rca/nltl/lvg-bucket/mp3/first-principles"
+output_dir = "./output"
 
-@app.route('/save_numbers', methods=['POST'])
-def save_numbers():
+
+@app.route('/test_values', methods=['POST'])
+def test_values():
     data = request.get_json()
     if 'lvg_values' in data:
-    #     numbers = data['numbers']
-    #     message_json = json.dumps({'numbers': numbers})
-    #     message_bytes = message_json.encode('utf-8')
-        
-    #     # Publish message to Pub/Sub
-    #     future = publisher.publish(topic_path, data=message_bytes)
-    #     future.result()  # Ensure the message is published
-        print(data)
-        return jsonify({"message": "Numbers pushed to Pub/Sub successfully"}), 200
+        stems = data['lvg_values']['stems']
+        volumes = data['lvg_values']['volumes'][0:len(stems)] # only need volume for each stem
+        rounded_volumes = [round(i, 3) for i in volumes]
+        print(f"Worked! {rounded_volumes}")
+        return jsonify({"message": f"Success! {data}"}), 200
     else:
         return jsonify({"error": "Invalid data"}), 400
-        
+
 @app.route('/test_mixdown', methods=['POST'])
 def test_mixdown():
     data = request.get_json()
-    if 'lvg_values' in data:   
-        stem_numbers = []
-        volumes = []
-        # print(data)
-        for item in data["lvg_values"]:
-            stem_numbers.append(item['number'])
-            volumes.append(item['value'])
-        print(stem_numbers)
-        print(volumes)
-        return jsonify({"message": f"Success! {stem_numbers}"}), 200
+    if 'lvg_values' in data:
+        stems = data['lvg_values']['stems']
+        volumes = data['lvg_values']['volumes'][0:len(stems)] # only need volume for each stem
+        rounded_volumes = [round(i, 3) for i in volumes]
+        input_files = mixer.get_stems(stems_dir, stems)
+        mixer.create_mixdown(input_files, rounded_volumes)
+        return jsonify({"message": f"Success! {data}"}), 200
     else:
         return jsonify({"error": "Invalid data"}), 400
-
 
 # Database connection setup using Cloud SQL Auth Proxy
 def init_db_connection():

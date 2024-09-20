@@ -1,21 +1,27 @@
 function generateRandomNumbers() {
 
-    const numbers = Array.from({length: 8}, (_, i) => i + 1);
-    
+    const stems = Array.from({length: 8}, (_, i) => i + 1);
+    const volumes = [];
+
     // Shuffle the array to randomize the order
-    for (let i = numbers.length - 1; i > 0; i--) {
+    for (let i = stems.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+        [stems[i], stems[j]] = [stems[j], stems[i]];
     }
-    
-    // Select the first 3 elements from the shuffled array
-    const selectedNumbers = numbers.slice(0, 3);
-    
-    // Assign each selected number a random value between 0 and 1
-    const lvg_values = selectedNumbers.map(num => ({
-        number: num,
-        value: Math.random()
-    }));
+    const selectedStems = stems.slice(0, 3);
+
+    // generate a bunch of random values
+    for (let i = 32 - 1; i > 0; i--) {
+        volumes.push(Math.random())
+    }
+
+    // print the value
+    const lvg_values = {
+        stems: selectedStems,
+        volumes: volumes
+    }
+
+    console.log(lvg_values);
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "http://127.0.0.1:5000/test_mixdown", true);
@@ -23,9 +29,9 @@ function generateRandomNumbers() {
     xhr.send(JSON.stringify({ lvg_values: lvg_values }));
     xhr.onload = function() {
         if (xhr.status === 200) {
-            alert("Generated values: " + lvg_values.join(", ") + " and pushed to Pub/Sub.");
+            alert("Worked!");
         } else {
-            alert("Failed to push lvg_values to Pub/Sub.");
+            alert("Something wrong!");
         }
     };
 }
