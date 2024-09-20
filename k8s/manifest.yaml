@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lvg-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lvg-app
+  template:
+    metadata:
+      labels:
+        app: lvg-app
+    spec:
+      containers:
+      - name: lvg-app
+        image: localhost:5001/lvg-app:latest
+        ports:
+        - containerPort: 5000
