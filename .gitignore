@@ -4,6 +4,9 @@
 # custom ignores
 output/
 .output/
+output/
+.output/
+.env
 
 # Terraform files
 *.tfstate

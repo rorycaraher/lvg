@@ -1,10 +1,13 @@
-from flask import Flask, request, jsonify, send_from_directory
 import os
+from dotenv import load_dotenv
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import json
 from datetime import datetime
 # mixdown stuff
 from mixer import mixer
+
+load_dotenv()
 
 app = Flask(__name__,
             static_url_path='', 
@@ -13,8 +16,8 @@ app = Flask(__name__,
 CORS(app)
 
 mixer = mixer.Mixer()
-stems_dir = "/Users/rca/nltl/lvg-bucket/mp3/first-principles"
-output_dir = "./output"
+stems_dir = os.getenv('STEMS_DIR')
+output_dir = os.getenv('OUTPUT_DIR')
 
 
 @app.route('/test_values', methods=['POST'])

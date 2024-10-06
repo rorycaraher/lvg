@@ -4,13 +4,7 @@ import random
 from datetime import datetime
 import ffmpeg
 
-stems_dir = "/Users/rca/nltl/lvg-bucket/mp3/first-principles"
-output_dir = "./output"
-
 class Mixer:
-    def __init__(self):
-        stems_dir = "/Users/rca/nltl/lvg-bucket/mp3/first-principles"
-        output_dir = "./output"
 
     def get_stems(self, directory, selected_stems):
         selected_file_paths = [os.path.join(directory, f"{file}.mp3") for file in selected_stems]
